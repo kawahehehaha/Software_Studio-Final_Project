@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "8140b6e1-a717-49d5-a33c-0c187c826efe",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Owlet_Monster_Walk+Attack_6": {
+      "ver": "1.0.6",
+      "uuid": "63099e46-7bd7-4a7a-85ea-b2b7687d44a4",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "8140b6e1-a717-49d5-a33c-0c187c826efe",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -2.5,
+      "offsetY": -2.5,
+      "trimX": 3,
+      "trimY": 5,
+      "width": 181,
+      "height": 27,
+      "rawWidth": 192,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

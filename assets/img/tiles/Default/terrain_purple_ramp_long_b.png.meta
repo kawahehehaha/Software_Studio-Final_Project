@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "20f98878-f4b4-4e3f-9bdd-e991f0f886a7",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_purple_ramp_long_b": {
+      "ver": "1.0.6",
+      "uuid": "c6d790e5-76f2-445f-9841-69d6d3ff74e6",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "20f98878-f4b4-4e3f-9bdd-e991f0f886a7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -16,
+      "trimX": 0,
+      "trimY": 32,
+      "width": 64,
+      "height": 32,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

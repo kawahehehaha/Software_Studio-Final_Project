@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "3f082ad2-7da6-411c-ba0a-5c52d7cdcdf4",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Pink_Monster_Climb_4": {
+      "ver": "1.0.6",
+      "uuid": "b3accfdd-39c8-48a8-ad31-4a0784b6facb",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "3f082ad2-7da6-411c-ba0a-5c52d7cdcdf4",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 128,
+      "height": 32,
+      "rawWidth": 128,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

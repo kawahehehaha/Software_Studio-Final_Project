@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "5517ed3a-ef05-4075-b11d-7fa7ff7c05cf",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Pink_Monster_Throw_4": {
+      "ver": "1.0.6",
+      "uuid": "ffd032ce-2a4a-45cc-a1ea-1aa6cba7ed77",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "5517ed3a-ef05-4075-b11d-7fa7ff7c05cf",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 128,
+      "height": 32,
+      "rawWidth": 128,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

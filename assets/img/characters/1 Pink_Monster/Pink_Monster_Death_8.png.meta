@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "093927a6-fcd4-4afd-a1e8-d3617495b25f",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 256,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Pink_Monster_Death_8": {
+      "ver": "1.0.6",
+      "uuid": "c88a45e1-44ef-40d4-beb2-2be6fb8487ff",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "093927a6-fcd4-4afd-a1e8-d3617495b25f",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 256,
+      "height": 32,
+      "rawWidth": 256,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

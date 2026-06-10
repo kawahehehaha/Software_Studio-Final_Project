@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "37ed79ad-6491-4e65-86b1-c5b34c50c338",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_grass_ramp_long_a": {
+      "ver": "1.0.6",
+      "uuid": "1be0890f-5301-4e81-a94b-da3147b32129",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "37ed79ad-6491-4e65-86b1-c5b34c50c338",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 64,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

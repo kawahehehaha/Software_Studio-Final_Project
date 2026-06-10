@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "a98a3d43-8328-48f2-b89b-72c2d4cfc220",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_snow_ramp_long_b": {
+      "ver": "1.0.6",
+      "uuid": "4bdf158c-1299-4cf8-afa6-c715ea29881b",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "a98a3d43-8328-48f2-b89b-72c2d4cfc220",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -16,
+      "trimX": 0,
+      "trimY": 32,
+      "width": 64,
+      "height": 32,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

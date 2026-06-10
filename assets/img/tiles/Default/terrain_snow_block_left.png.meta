@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "176d1c98-d3ae-46e8-af1a-cc5b9e435f66",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_snow_block_left": {
+      "ver": "1.0.6",
+      "uuid": "060697a8-bc5f-4262-b0ee-78b3df443237",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "176d1c98-d3ae-46e8-af1a-cc5b9e435f66",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 64,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

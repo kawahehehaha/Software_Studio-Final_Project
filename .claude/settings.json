@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\User\\\\Downloads\\\\Software_Studio-Final_Project-mergelevel2\" -Depth 0)",
+      "PowerShell(Copy-Item \"c:\\\\Users\\\\User\\\\Downloads\\\\Software_Studio-Final_Project-mergelevel2\\\\TO_BE_CLONE\\\\assets\\\\colyseus.js\" -Destination \"c:\\\\Users\\\\User\\\\Downloads\\\\Software_Studio-Final_Project-mergelevel2\\\\assets\\\\colyseus.js\")",
+      "Bash(python3 -c ' *)",
+      "PowerShell(Move-Item \"c:\\\\Users\\\\User\\\\Downloads\\\\Software_Studio-Final_Project-mergelevel2\\\\TO_BE_CLONE\\\\spaceship-server\" \"c:\\\\Users\\\\User\\\\Downloads\\\\Software_Studio-Final_Project-mergelevel2\\\\spaceship-server\")",
+      "Bash(python -c ' *)",
+      "Bash(xargs grep -l \"2cb4dY\")"
+    ]
+  }
+}

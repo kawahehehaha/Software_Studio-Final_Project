@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "acee2543-2d1f-4d63-9d4f-bd1b2b9b431b",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_stone_ramp_long_b": {
+      "ver": "1.0.6",
+      "uuid": "10331a13-08cf-4201-a7bd-4cdf2bf795aa",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "acee2543-2d1f-4d63-9d4f-bd1b2b9b431b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -16,
+      "trimX": 0,
+      "trimY": 32,
+      "width": 64,
+      "height": 32,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

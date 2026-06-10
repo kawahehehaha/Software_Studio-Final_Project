@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "e681c60e-5ada-458b-ab02-d05e30ec9880",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_stone_vertical_bottom": {
+      "ver": "1.0.6",
+      "uuid": "4f9bc070-3e0c-43cb-91fa-4effaaffd5ff",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "e681c60e-5ada-458b-ab02-d05e30ec9880",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 64,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

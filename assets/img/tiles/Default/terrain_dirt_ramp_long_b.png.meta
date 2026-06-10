@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "3adf5d10-6a03-4e48-94f9-14a7912b5b3b",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_dirt_ramp_long_b": {
+      "ver": "1.0.6",
+      "uuid": "17558676-15c9-47a1-984f-783093d11336",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "3adf5d10-6a03-4e48-94f9-14a7912b5b3b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -16,
+      "trimX": 0,
+      "trimY": 32,
+      "width": 64,
+      "height": 32,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

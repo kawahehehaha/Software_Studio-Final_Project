@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "b00b6b8f-7d5f-4d31-90f5-deb377927b60",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 256,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Dude_Monster_Jump_8": {
+      "ver": "1.0.6",
+      "uuid": "a9f98a67-e159-4cba-b19b-5ee2fa7be7fc",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "b00b6b8f-7d5f-4d31-90f5-deb377927b60",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": -1,
+      "trimX": 7,
+      "trimY": 2,
+      "width": 241,
+      "height": 30,
+      "rawWidth": 256,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

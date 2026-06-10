@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "a100d448-e283-4399-ba81-9bab954bf0d3",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 256,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Owlet_Monster_Jump_8": {
+      "ver": "1.0.6",
+      "uuid": "0e84c18e-633e-4718-bb76-d641b19700bc",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "a100d448-e283-4399-ba81-9bab954bf0d3",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -2.5,
+      "offsetY": -1,
+      "trimX": 3,
+      "trimY": 2,
+      "width": 245,
+      "height": 30,
+      "rawWidth": 256,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

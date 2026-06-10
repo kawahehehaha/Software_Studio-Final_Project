@@ -1,0 +1,72 @@
+[1mdiff --git a/assets/img/Backpack_.png b/assets/img/Backpack_.png[m
+[1mdeleted file mode 100644[m
+[1mindex 7d01f26..0000000[m
+Binary files a/assets/img/Backpack_.png and /dev/null differ
+[1mdiff --git a/assets/img/invite/Btn-accept.png b/assets/img/Btn-accept.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-accept.png[m
+[1mrename to assets/img/Btn-accept.png[m
+[1mdiff --git a/assets/img/invite/Btn-accept.png.meta b/assets/img/Btn-accept.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-accept.png.meta[m
+[1mrename to assets/img/Btn-accept.png.meta[m
+[1mdiff --git a/assets/img/invite/Btn-declient.png b/assets/img/Btn-declient.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-declient.png[m
+[1mrename to assets/img/Btn-declient.png[m
+[1mdiff --git a/assets/img/invite/Btn-declient.png.meta b/assets/img/Btn-declient.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-declient.png.meta[m
+[1mrename to assets/img/Btn-declient.png.meta[m
+[1mdiff --git a/assets/img/button/Btn-exit.png b/assets/img/Btn-exit.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-exit.png[m
+[1mrename to assets/img/Btn-exit.png[m
+[1mdiff --git a/assets/img/button/Btn-exit.png.meta b/assets/img/Btn-exit.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-exit.png.meta[m
+[1mrename to assets/img/Btn-exit.png.meta[m
+[1mdiff --git a/assets/img/button/Btn-exit_hover.png b/assets/img/Btn-exit_hover.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-exit_hover.png[m
+[1mrename to assets/img/Btn-exit_hover.png[m
+[1mdiff --git a/assets/img/button/Btn-exit_hover.png.meta b/assets/img/Btn-exit_hover.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-exit_hover.png.meta[m
+[1mrename to assets/img/Btn-exit_hover.png.meta[m
+[1mdiff --git a/assets/img/invite/Btn-explore_together_.png b/assets/img/Btn-explore_together_.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-explore_together_.png[m
+[1mrename to assets/img/Btn-explore_together_.png[m
+[1mdiff --git a/assets/img/invite/Btn-explore_together_.png.meta b/assets/img/Btn-explore_together_.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-explore_together_.png.meta[m
+[1mrename to assets/img/Btn-explore_together_.png.meta[m
+[1mdiff --git a/assets/img/button/Btn-setting.png b/assets/img/Btn-setting.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-setting.png[m
+[1mrename to assets/img/Btn-setting.png[m
+[1mdiff --git a/assets/img/button/Btn-setting.png.meta b/assets/img/Btn-setting.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-setting.png.meta[m
+[1mrename to assets/img/Btn-setting.png.meta[m
+[1mdiff --git a/assets/img/button/Btn-setting_hover.png b/assets/img/Btn-setting_hover.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-setting_hover.png[m
+[1mrename to assets/img/Btn-setting_hover.png[m
+[1mdiff --git a/assets/img/button/Btn-setting_hover.png.meta b/assets/img/Btn-setting_hover.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-setting_hover.png.meta[m
+[1mrename to assets/img/Btn-setting_hover.png.meta[m
+[1mdiff --git a/assets/img/invite/Btn-solo_Exploration_.png b/assets/img/Btn-solo_Exploration_.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-solo_Exploration_.png[m
+[1mrename to assets/img/Btn-solo_Exploration_.png[m
+[1mdiff --git a/assets/img/invite/Btn-solo_Exploration_.png.meta b/assets/img/Btn-solo_Exploration_.png.meta[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/invite/Btn-solo_Exploration_.png.meta[m
+[1mrename to assets/img/Btn-solo_Exploration_.png.meta[m
+[1mdiff --git a/assets/img/button/Btn-start.png b/assets/img/Btn-start.png[m
+[1msimilarity index 100%[m
+[1mrename from assets/img/button/Btn-start.png[m
+[1mrename to assets/img/Btn-s

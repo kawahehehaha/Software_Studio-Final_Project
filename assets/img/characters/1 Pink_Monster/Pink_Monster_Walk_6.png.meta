@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "9884390b-c96c-4ae5-b77a-4f0f0990320d",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Pink_Monster_Walk_6": {
+      "ver": "1.0.6",
+      "uuid": "1fa0753b-dfce-4b3f-abab-1128bdc82bdd",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "9884390b-c96c-4ae5-b77a-4f0f0990320d",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 192,
+      "height": 32,
+      "rawWidth": 192,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

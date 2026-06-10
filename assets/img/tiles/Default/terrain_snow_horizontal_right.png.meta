@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "83449645-5ba3-457a-8686-2d4abe636d65",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 64,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "terrain_snow_horizontal_right": {
+      "ver": "1.0.6",
+      "uuid": "d14add0c-5b0b-4403-9db2-87dc9d586508",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "83449645-5ba3-457a-8686-2d4abe636d65",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 64,
+      "height": 64,
+      "rawWidth": 64,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
