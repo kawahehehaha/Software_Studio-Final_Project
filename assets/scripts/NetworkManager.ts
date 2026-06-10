@@ -136,8 +136,16 @@ export default class NetworkManager extends cc.Component {
                         if (data[id].scaleX !== undefined) this.remotePlayer.scaleX = data[id].scaleX;
                         if (data[id].scaleY !== undefined) this.remotePlayer.scaleY = data[id].scaleY;
                     }
+                    // Only set angle on nodes without an active physics body.
+                    // Setting angle on a Kinematic RigidBody triggers syncRotation
+                    // → b2Body.SetTransformXY and crashes in Cocos 2.4.x.
+                    // In Level2-part2 fixedRotation=true so angle is always 0 anyway;
+                    // gravity visual rotation is handled separately via applyGravityVisual.
                     if (data[id].angle !== undefined) {
-                        this.remotePlayer.angle = data[id].angle;
+                        const _rb = this.remotePlayer.getComponent(cc.RigidBody) as any;
+                        if (!_rb || !_rb.enabled) {
+                            this.remotePlayer.angle = data[id].angle;
+                        }
                     }
                     // 動畫同步：action 改變時強制更新（清除 currentAction 確保 playSheet 被呼叫）
                     if (data[id].action) {
@@ -279,6 +287,48 @@ export default class NetworkManager extends cc.Component {
                     break;
                 }
             }
+        });
+
+        // 對方丟了炸彈 → 本地也生成同一顆炸彈
+        this.room.onMessage('throw_bomb', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            if (!this.remotePlayer) return;
+            const remoteCtrl = this._findCtrlOnSelf(this.remotePlayer)
+                || (this.remotePlayer.getComponentInChildren('PinkMonsterPhysicsController') as any)
+                || (this.remotePlayer.getComponentInChildren('PinkMonsterController') as any);
+            if (remoteCtrl && typeof remoteCtrl.spawnNetworkBomb === 'function') {
+                remoteCtrl.spawnNetworkBomb(data.x, data.y, data.direction, data.speedX, data.speedY);
+            }
+        });
+
+        // 對方打死怪物 → 本地也消除同一隻
+        this.room.onMessage('enemy_killed', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            const scene = cc.director.getScene();
+            if (!scene) return;
+            const enemies = scene.getComponentsInChildren(data.type) as any[];
+            for (const e of enemies) {
+                if (!e || !e.node || !e.node.isValid || e.dead) continue;
+                const pos = e.node.convertToWorldSpaceAR(cc.v2());
+                if (Math.abs(pos.x - data.x) < 80 && Math.abs(pos.y - data.y) < 80) {
+                    e._fromNetwork = true;
+                    e.flatten(null, false);
+                    e._fromNetwork = false;
+                    break;
+                }
+            }
+        });
+
+        // 對方碰到存檔點 → 本地玩家也更新存檔位置
+        this.room.onMessage('checkpoint_reached', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            if (!this.localPlayer) return;
+            const localCtrl = this._findCtrlOnSelf(this.localPlayer) as any;
+            if (!localCtrl || typeof localCtrl.setCheckpoint !== 'function') return;
+            const playerParent = this.localPlayer.parent as cc.Node;
+            if (!playerParent) return;
+            const localPos = (playerParent as any).convertToNodeSpaceAR(cc.v2(data.x, data.y));
+            localCtrl.setCheckpoint(localPos.x, localPos.y, !!data.inverted);
         });
 
         // 本地有玩家失血 → 同步給對方（防重入避免無限迴圈）

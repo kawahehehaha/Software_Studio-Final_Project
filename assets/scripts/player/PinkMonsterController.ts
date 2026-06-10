@@ -1237,7 +1237,31 @@ cc.Class({
             this.bombThrowSpeedX,
             this.bombThrowSpeedY
         );
+
+        // 廣播炸彈給對方
+        var nm = (window as any).NM;
+        if (nm && nm.room) {
+            var worldPos = bomb.convertToWorldSpaceAR(cc.v2());
+            nm.room.send('throw_bomb', {
+                x: worldPos.x,
+                y: worldPos.y,
+                direction: direction,
+                speedX: this.bombThrowSpeedX,
+                speedY: this.bombThrowSpeedY
+            });
+        }
         return true;
+    },
+
+    // 由 NetworkManager 呼叫：在遠端客戶端生成炸彈（不扣 HUD）
+    spawnNetworkBomb: function (worldX, worldY, direction, speedX, speedY) {
+        if (!this.bombPrefab || !this.node.parent) { return; }
+        var bomb = cc.instantiate(this.bombPrefab);
+        this.node.parent.addChild(bomb);
+        var localPos = this.node.parent.convertToNodeSpaceAR(cc.v2(worldX, worldY));
+        bomb.setPosition(localPos.x, localPos.y);
+        var thrownBomb = bomb.addComponent(ThrownBomb);
+        thrownBomb.launch(direction, this.bombFrame, this.bombActiveFrame, this.explosionFrames, speedX, speedY);
     },
 
     spendBombFromHud: function () {

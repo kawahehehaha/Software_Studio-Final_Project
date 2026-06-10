@@ -52,6 +52,7 @@ cc.Class({
     },
 
     onLoad: function () {
+        this._fromNetwork = false;
         this.sprite = this.getComponent(cc.Sprite);
         this.body = this.getComponent(cc.RigidBody);
         this.collider = this.getComponent(cc.PhysicsBoxCollider) ||
@@ -411,6 +412,16 @@ cc.Class({
 
     flatten: function (player, shouldBouncePlayer) {
         this.dead = true;
+
+        // 廣播怪物死亡給對方（防止 _fromNetwork 回響）
+        if (!this._fromNetwork) {
+            var nm = (window as any).NM;
+            if (nm && nm.room) {
+                var worldPos = this.node.convertToWorldSpaceAR(cc.v2());
+                nm.room.send('enemy_killed', { type: 'SlimeController', x: worldPos.x, y: worldPos.y });
+            }
+        }
+
         this.stopHorizontalMovement();
         this.hideAttackFlatVisual();
 
@@ -460,10 +471,10 @@ cc.Class({
     startDeathFall: function () {
         this.deathFalling = true;
         this.deathTimer = Math.max(this.deathFallDuration, 0.1);
-
-        if (this.body) {
-            this.body.enabled = false;
-        }
+        // body.enabled = false would free b2Body but leave a dangling _b2Body pointer,
+        // causing SetTransformXY to crash when updateDeath sets node.y.
+        // The body is already inert (Static + gravityScale=0 + collider.enabled=false)
+        // from flatten(), so there is nothing to do here.
     },
 
     bouncePlayer: function (player) {

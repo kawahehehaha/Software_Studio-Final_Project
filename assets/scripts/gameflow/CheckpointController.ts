@@ -233,6 +233,19 @@ cc.Class({
                 respawnPosition.y,
                 respawnInverted
             );
+
+            // 通知對方也更新存檔點（對方用世界座標自行換算本地座標）
+            var nm = (window as any).NM;
+            if (nm && nm.room) {
+                var worldRespawn = this.node.convertToWorldSpaceAR(
+                    cc.v2(this.respawnOffsetX, this.respawnOffsetY)
+                );
+                nm.room.send('checkpoint_reached', {
+                    x: worldRespawn.x,
+                    y: worldRespawn.y,
+                    inverted: respawnInverted
+                });
+            }
         }
 
         cc.director.emit('player-life-restored');

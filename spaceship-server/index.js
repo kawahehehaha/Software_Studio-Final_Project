@@ -116,6 +116,24 @@ class GameRoom extends Room {
         this.onMessage("game_over", () => {
             this.broadcast("game_over", {});
         });
+
+        // ── 炸彈生成，通知對方也生成同一顆炸彈 ──────────────────
+        this.onMessage("throw_bomb", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("throw_bomb", data);
+        });
+
+        // ── 怪物死亡，通知對方同步消除 ────────────────────────────
+        this.onMessage("enemy_killed", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("enemy_killed", data);
+        });
+
+        // ── 碰到旗幟存檔點，通知對方也更新存檔 ───────────────────
+        this.onMessage("checkpoint_reached", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("checkpoint_reached", data);
+        });
     }
 
     onJoin(client) {
