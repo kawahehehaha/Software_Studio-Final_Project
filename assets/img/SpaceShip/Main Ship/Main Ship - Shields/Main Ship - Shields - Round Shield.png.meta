@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "c8eea3a3-830c-4cb7-95c0-bea6b709f887",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 768,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Shields - Round Shield": {
+      "ver": "1.0.6",
+      "uuid": "cb43a7bc-d562-4bfa-8ff0-6b209a8ef4e5",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "c8eea3a3-830c-4cb7-95c0-bea6b709f887",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 1,
+      "trimX": 7,
+      "trimY": 6,
+      "width": 754,
+      "height": 50,
+      "rawWidth": 768,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

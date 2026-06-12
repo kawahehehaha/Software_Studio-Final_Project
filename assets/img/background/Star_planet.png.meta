@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "204414dd-a5bb-45cc-a7e4-a77fe2889304",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 16000,
+  "height": 200,
+  "platformSettings": {},
+  "subMetas": {
+    "Star_planet": {
+      "ver": "1.0.6",
+      "uuid": "96bd99c3-0dcd-4100-8d9c-1eb2cfbd62bf",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "204414dd-a5bb-45cc-a7e4-a77fe2889304",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 2.5,
+      "offsetY": -1,
+      "trimX": 42,
+      "trimY": 32,
+      "width": 15921,
+      "height": 138,
+      "rawWidth": 16000,
+      "rawHeight": 200,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

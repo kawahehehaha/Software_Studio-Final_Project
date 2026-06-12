@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "40e50e8e-3b4f-4568-91a9-80a6be201c9e",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 336,
+  "height": 96,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Burst Engine - Spritesheet": {
+      "ver": "1.0.6",
+      "uuid": "9e231b8c-98c5-4e11-9d4d-fb6cfc8cc090",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "40e50e8e-3b4f-4568-91a9-80a6be201c9e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -9,
+      "trimX": 19,
+      "trimY": 26,
+      "width": 298,
+      "height": 62,
+      "rawWidth": 336,
+      "rawHeight": 96,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

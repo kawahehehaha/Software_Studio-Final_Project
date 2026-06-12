@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "4a60c8e8-d792-4d08-ab74-e5213df71c0f",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Big Pulse Engine - Idle": {
+      "ver": "1.0.6",
+      "uuid": "8eeceb32-6fb0-4eb6-a49c-49855e54a355",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "4a60c8e8-d792-4d08-ab74-e5213df71c0f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -11.5,
+      "trimX": 16,
+      "trimY": 34,
+      "width": 160,
+      "height": 3,
+      "rawWidth": 192,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

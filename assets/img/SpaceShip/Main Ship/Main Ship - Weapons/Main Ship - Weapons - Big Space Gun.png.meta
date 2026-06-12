@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "1039a6e3-57cc-49a3-8197-bff4aee10ae2",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 576,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Weapons - Big Space Gun": {
+      "ver": "1.0.6",
+      "uuid": "46727baf-9e13-4f6f-884f-552dd818614c",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "1039a6e3-57cc-49a3-8197-bff4aee10ae2",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 3,
+      "trimX": 15,
+      "trimY": 8,
+      "width": 546,
+      "height": 26,
+      "rawWidth": 576,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

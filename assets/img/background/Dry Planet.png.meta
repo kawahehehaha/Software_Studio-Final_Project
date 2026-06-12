@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "370829f8-3397-4b71-92cd-4e06f16d1e2c",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 15000,
+  "height": 100,
+  "platformSettings": {},
+  "subMetas": {
+    "Dry Planet": {
+      "ver": "1.0.6",
+      "uuid": "069457c3-3125-44a5-b7db-59e0f9e3c0f6",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "370829f8-3397-4b71-92cd-4e06f16d1e2c",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -0.5,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 14999,
+      "height": 99,
+      "rawWidth": 15000,
+      "rawHeight": 100,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

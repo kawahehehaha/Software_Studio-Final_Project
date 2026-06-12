@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "0bf13ed4-02de-4915-bd8a-855b9e110620",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 640,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Shields - Front Shield": {
+      "ver": "1.0.6",
+      "uuid": "96a8f868-0fd7-47db-bfcd-3b0ade309672",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "0bf13ed4-02de-4915-bd8a-855b9e110620",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 12,
+      "trimX": 14,
+      "trimY": 11,
+      "width": 612,
+      "height": 18,
+      "rawWidth": 640,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "cca41149-9586-4470-a2b5-b9c59dc743f1",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 96,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Base Engine - Spritesheet": {
+      "ver": "1.0.6",
+      "uuid": "98ab12f9-cc2b-42d4-85d3-f76486ae39ec",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "cca41149-9586-4470-a2b5-b9c59dc743f1",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -11,
+      "trimX": 14,
+      "trimY": 30,
+      "width": 164,
+      "height": 58,
+      "rawWidth": 192,
+      "rawHeight": 96,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

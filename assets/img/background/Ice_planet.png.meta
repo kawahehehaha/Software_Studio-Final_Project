@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "880b87e9-9def-4dc3-81e4-6e95b63e52c7",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 15000,
+  "height": 100,
+  "platformSettings": {},
+  "subMetas": {
+    "Ice_planet": {
+      "ver": "1.0.6",
+      "uuid": "7326d10a-d720-40b4-804e-10f5367ae21a",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "880b87e9-9def-4dc3-81e4-6e95b63e52c7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": 0,
+      "trimX": 1,
+      "trimY": 0,
+      "width": 14999,
+      "height": 100,
+      "rawWidth": 15000,
+      "rawHeight": 100,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

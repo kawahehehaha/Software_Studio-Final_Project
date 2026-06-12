@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "895767af-7efd-42f3-b53d-c4c056e0c415",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 144,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Base Engine - Idle": {
+      "ver": "1.0.6",
+      "uuid": "1f453e31-698e-4d99-b07e-1fb4cf9d7dd3",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "895767af-7efd-42f3-b53d-c4c056e0c415",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -9.5,
+      "trimX": 14,
+      "trimY": 30,
+      "width": 116,
+      "height": 7,
+      "rawWidth": 144,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

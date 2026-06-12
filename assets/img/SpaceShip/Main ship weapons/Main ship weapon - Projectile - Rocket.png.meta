@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "15aa1f80-fa57-4c69-a2bf-896d9e27fcc9",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 96,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Main ship weapon - Projectile - Rocket": {
+      "ver": "1.0.6",
+      "uuid": "d36b3848-07d0-4e41-a6f7-230652f70d73",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "15aa1f80-fa57-4c69-a2bf-896d9e27fcc9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": -3,
+      "trimX": 13,
+      "trimY": 10,
+      "width": 69,
+      "height": 18,
+      "rawWidth": 96,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

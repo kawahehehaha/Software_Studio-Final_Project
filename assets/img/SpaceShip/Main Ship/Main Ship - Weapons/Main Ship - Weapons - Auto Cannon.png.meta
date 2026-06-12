@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "8e6c3385-2a1d-49c8-8efb-6248b11fbba0",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 336,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Weapons - Auto Cannon": {
+      "ver": "1.0.6",
+      "uuid": "48fd7bcc-e254-4468-9bf3-5383a59cda41",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "8e6c3385-2a1d-49c8-8efb-6248b11fbba0",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 5.5,
+      "trimX": 12,
+      "trimY": 5,
+      "width": 312,
+      "height": 27,
+      "rawWidth": 336,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "dd359131-abef-4b63-9f06-45ced52ae96f",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Supercharged Engine - Idle": {
+      "ver": "1.0.6",
+      "uuid": "6b16fa8a-c461-42f9-b0a7-5b35cfd7dc0f",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "dd359131-abef-4b63-9f06-45ced52ae96f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -12.5,
+      "trimX": 13,
+      "trimY": 35,
+      "width": 166,
+      "height": 3,
+      "rawWidth": 192,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

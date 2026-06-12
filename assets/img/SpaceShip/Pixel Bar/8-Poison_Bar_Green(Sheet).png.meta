@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "f6652ba0-b75d-4de7-b9a7-90aaa5ce7955",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "8-Poison_Bar_Green(Sheet)": {
+      "ver": "1.0.6",
+      "uuid": "f31ff799-43de-49c7-ae99-556505d4584c",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "f6652ba0-b75d-4de7-b9a7-90aaa5ce7955",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -3,
+      "offsetY": 0.5,
+      "trimX": 4,
+      "trimY": 4,
+      "width": 178,
+      "height": 23,
+      "rawWidth": 192,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

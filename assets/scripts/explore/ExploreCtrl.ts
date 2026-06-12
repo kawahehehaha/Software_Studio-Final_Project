@@ -1,7 +1,7 @@
 /**
  * ExploreCtrl.ts
  */
-import GameData from "./GameData";
+import GameData from "../gameflow/GameData";
 import { AudioBroadcast } from "../Audio/AudioEvent";
 
 const { ccclass, property } = cc._decorator;
@@ -338,8 +338,8 @@ export default class ExploreCtrl extends cc.Component {
         let scene: string;
         switch (level) {
             case 1: scene = "Level1"; break;
-            case 2: scene = "Level2"; break;
-            case 3: scene = "Level3"; break;
+            case 2: scene = "Tutorial2"; break;
+            case 3: scene = "Tutorial3"; break;
             default:
                 GameData.calcEnding();
                 scene = "Ending";

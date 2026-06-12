@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "3c5d05a9-785b-49dd-8620-65a27550ff8d",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 640,
+  "height": 64,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Shields - Invincibility Shield": {
+      "ver": "1.0.6",
+      "uuid": "293ec10d-ca0c-4efd-a883-6d0b5e344d22",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "3c5d05a9-785b-49dd-8620-65a27550ff8d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 16,
+      "trimY": 18,
+      "width": 608,
+      "height": 28,
+      "rawWidth": 640,
+      "rawHeight": 64,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

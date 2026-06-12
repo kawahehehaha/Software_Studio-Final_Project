@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "e1023163-1e5b-4046-a061-30c2d1c1014f",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 816,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Weapons - Rockets": {
+      "ver": "1.0.6",
+      "uuid": "23ac3fcc-2362-4e1c-80d4-cab8aa534a15",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "e1023163-1e5b-4046-a061-30c2d1c1014f",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -22,
+      "offsetY": -1.5,
+      "trimX": 7,
+      "trimY": 13,
+      "width": 758,
+      "height": 25,
+      "rawWidth": 816,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

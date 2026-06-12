@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "539af4dd-0705-4f82-9626-8dde6fa6b9bf",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 672,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Weapons - Zapper": {
+      "ver": "1.0.6",
+      "uuid": "e25b2b98-dffa-42a9-8720-e18bc7b42485",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "539af4dd-0705-4f82-9626-8dde6fa6b9bf",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 4,
+      "trimX": 12,
+      "trimY": 9,
+      "width": 648,
+      "height": 22,
+      "rawWidth": 672,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

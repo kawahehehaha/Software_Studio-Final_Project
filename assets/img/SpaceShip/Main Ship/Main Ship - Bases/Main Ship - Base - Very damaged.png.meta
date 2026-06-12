@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "17f408a9-5eed-4bf3-92a7-303690aa7f97",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 48,
+  "height": 48,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Base - Very damaged": {
+      "ver": "1.0.6",
+      "uuid": "bd4d33df-4d2d-475e-9673-6f904d5c9cf9",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "17f408a9-5eed-4bf3-92a7-303690aa7f97",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 9,
+      "trimY": 11,
+      "width": 30,
+      "height": 26,
+      "rawWidth": 48,
+      "rawHeight": 48,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

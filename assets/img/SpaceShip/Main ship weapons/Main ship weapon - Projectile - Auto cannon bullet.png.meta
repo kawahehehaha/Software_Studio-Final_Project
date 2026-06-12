@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "46b2d68a-887c-4dbb-a645-ae0fe5d445b9",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Main ship weapon - Projectile - Auto cannon bullet": {
+      "ver": "1.0.6",
+      "uuid": "3a0c851f-a6f2-4cd6-8ea3-1eed0f064346",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "46b2d68a-887c-4dbb-a645-ae0fe5d445b9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -0.5,
+      "trimX": 11,
+      "trimY": 8,
+      "width": 106,
+      "height": 17,
+      "rawWidth": 128,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

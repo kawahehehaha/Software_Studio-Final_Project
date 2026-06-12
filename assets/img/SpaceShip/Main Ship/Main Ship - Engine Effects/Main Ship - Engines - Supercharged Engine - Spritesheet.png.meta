@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "e32ecbda-5bc4-4edd-abf0-0bc28afc68a8",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 192,
+  "height": 96,
+  "platformSettings": {},
+  "subMetas": {
+    "Main Ship - Engines - Supercharged Engine - Spritesheet": {
+      "ver": "1.0.6",
+      "uuid": "3e015601-fce6-49b9-8622-25cf012509d7",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "e32ecbda-5bc4-4edd-abf0-0bc28afc68a8",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -17,
+      "trimX": 13,
+      "trimY": 35,
+      "width": 166,
+      "height": 60,
+      "rawWidth": 192,
+      "rawHeight": 96,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
