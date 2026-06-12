@@ -97,20 +97,29 @@ export default class Level3WeaponShooter extends cc.Component {
             this.bulletPoolReady = true;
         });
 
-        cc.director.on(
-            "level3-player-fire",
-            this.onPlayerFire,
-            this
-        );
+        cc.director.on("level3-player-fire", this.onPlayerFire, this);
+        cc.director.on("net-l3-player-fire", this.onRemotePlayerFire, this);
     }
 
     onDestroy() {
-        cc.director.off(
-            "level3-player-fire",
-            this.onPlayerFire,
-            this
-        );
+        cc.director.off("level3-player-fire", this.onPlayerFire, this);
+        cc.director.off("net-l3-player-fire", this.onRemotePlayerFire, this);
         this.bulletPool.clear();
+    }
+
+    private onRemotePlayerFire(data: { direction: number }) {
+        if (!this.bulletTexture || !this.bulletPoolReady) return;
+        // 只讓掛在遠端玩家節點上的 Shooter 響應
+        const nm = (window as any).NM;
+        if (!nm || !nm.remotePlayer || !nm.remotePlayer.isValid) return;
+        if (nm.remotePlayer !== this.node) return;
+
+        const now = Date.now() / 1000;
+        if (now - this.lastFireTime < this.fireCooldown) return;
+        this.lastFireTime = now;
+
+        const firePoint = data.direction < 0 ? this.leftFirePoint : this.rightFirePoint;
+        this.spawnBullet(firePoint || this.node);
     }
 
     private onPlayerFire(direction: number, source: cc.Node) {

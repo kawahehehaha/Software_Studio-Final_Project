@@ -49,8 +49,11 @@ export default class NetworkManager extends cc.Component {
 
     // ── 遠端玩家上一幀的動作，用來偵測變化 ──────────────────
     private _lastRemoteAction: string = '';
-    // ── 位置 debug 計數（只印前 5 次）──────────────────────
-    private _posDbgCount: number = 0;
+    // ── 位置 debug：每 2 秒印一次（0 = 立即印第一次）──────
+    private _posDbgTime: number = 0;
+
+    // ── AFTER_SCENE_LAUNCH lambda reference（不掛 this target 才能跨 WebSocket callback 正常觸發）──
+    private _afterSceneLaunchHandler: () => void = null;
 
     // ── 單例存取 ─────────────────────────────────────────────────
     static get instance(): NetworkManager | null {
@@ -67,6 +70,14 @@ export default class NetworkManager extends cc.Component {
         (window as any).NM = this;
         cc.game.addPersistRootNode(this.node);
 
+        // ── DEBUG: 攔截所有 cc.director.loadScene 呼叫，印出呼叫來源 ──────
+        const _origLoadScene = (cc.director.loadScene as Function).bind(cc.director);
+        (cc.director as any).loadScene = (name: string, ...args: any[]) => {
+            const stack = (new Error().stack || '').split('\n').slice(1, 6).map((s: string) => s.trim()).join(' → ');
+            cc.log(`[DBG.loadScene] "${name}" | ${stack}`);
+            return _origLoadScene(name, ...args);
+        };
+
         try {
             this.client = new Colyseus.Client(this.serverUrl);
             this.room = await this.client.joinOrCreate('space_room');
@@ -77,12 +88,15 @@ export default class NetworkManager extends cc.Component {
         }
 
         // 每次場景切換後重新分配玩家節點
-        cc.director.on(cc.Director.EVENT_AFTER_SCENE_LAUNCH, () => {
+        // 注意：不傳第三個參數 this，避免 Cocos 在 persist node 短暫 detach 時跳過此 listener
+        this._afterSceneLaunchHandler = () => {
+            const sceneName = cc.director.getScene()?.name ?? '(null)';
+            cc.log(`[NM.ase] AFTER_SCENE_LAUNCH → "${sceneName}"`);
             this.localPlayer  = null;
             this.remotePlayer = null;
             this.lastPushBlockPositions = [];
             this._lastRemoteAction = '';
-            this._posDbgCount = 0;
+            this._posDbgTime = 0;
             this.scheduleOnce(() => {
                 // 無論是否連線，先把 P2 節點的控制器預設關閉，避免雙角色同時受鍵盤控制
                 const p2Names = ['Player2', 'Pink_Monster_P2'];
@@ -94,7 +108,8 @@ export default class NetworkManager extends cc.Component {
                     this.assignPlayers();
                 }
             }, 0.05);
-        }, this);
+        };
+        cc.director.on(cc.Director.EVENT_AFTER_SCENE_LAUNCH, this._afterSceneLaunchHandler);
     }
 
     // ── 訊息處理 ─────────────────────────────────────────────────
@@ -120,16 +135,18 @@ export default class NetworkManager extends cc.Component {
                         spriteChild.y = lp.y;
                         if (data[id].scaleX !== undefined) spriteChild.scaleX = data[id].scaleX;
                         if (data[id].scaleY !== undefined) spriteChild.scaleY = data[id].scaleY;
-                        if (this._posDbgCount < 5) {
-                            this._posDbgCount++;
+                        const _now1 = Date.now();
+                        if (_now1 - this._posDbgTime >= 2000) {
+                            this._posDbgTime = _now1;
                             const sRb = spriteChild.getComponent(cc.RigidBody) as any;
-                            cc.log(`[NM.pos#${this._posDbgCount}] L2 sprite ${this.remotePlayer.name} lx=${lp.x.toFixed(1)} ly=${lp.y.toFixed(1)} rbType=${sRb?.type}(1=Kin)`);
+                            cc.log(`[NM.pos] L2 sprite ${this.remotePlayer.name} lx=${lp.x.toFixed(1)} ly=${lp.y.toFixed(1)} rbType=${sRb?.type}(1=Kin)`);
                         }
                     } else {
                         const remoteRb = this.remotePlayer.getComponent(cc.RigidBody) as any;
-                        if (this._posDbgCount < 5) {
-                            this._posDbgCount++;
-                            cc.log(`[NM.pos#${this._posDbgCount}] Explore ${this.remotePlayer.name} x=${data[id].x?.toFixed(1)} y=${data[id].y?.toFixed(1)} rbType=${remoteRb?.type}(1=Kin)`);
+                        const _now2 = Date.now();
+                        if (_now2 - this._posDbgTime >= 2000) {
+                            this._posDbgTime = _now2;
+                            cc.log(`[NM.pos] ${this.remotePlayer.name} x=${data[id].x?.toFixed(1)} y=${data[id].y?.toFixed(1)} rbType=${remoteRb?.type}(1=Kin)`);
                         }
                         this.remotePlayer.x = data[id].x;
                         this.remotePlayer.y = data[id].y;
@@ -141,9 +158,12 @@ export default class NetworkManager extends cc.Component {
                     // → b2Body.SetTransformXY and crashes in Cocos 2.4.x.
                     // In Level2-part2 fixedRotation=true so angle is always 0 anyway;
                     // gravity visual rotation is handled separately via applyGravityVisual.
+                    // Exception: Explore scene remote player uses fixedRotation=true with
+                    // disabled colliders — angle is purely visual (spacecraft tilt from A/D),
+                    // so it is safe to call SetTransformXY here.
                     if (data[id].angle !== undefined) {
                         const _rb = this.remotePlayer.getComponent(cc.RigidBody) as any;
-                        if (!_rb || !_rb.enabled) {
+                        if (!_rb || !_rb.enabled || (_rb && _rb.fixedRotation)) {
                             this.remotePlayer.angle = data[id].angle;
                         }
                     }
@@ -187,6 +207,15 @@ export default class NetworkManager extends cc.Component {
 
         // 場景切換（由伺服器廣播）
         this.room.onMessage('scene_change', (data: any) => {
+            if (!data.scene) return;
+            const currentScene = cc.director.getScene();
+            const curName = currentScene?.name ?? '(null)';
+            cc.log(`[NM.sc] recv scene_change: "${data.scene}", current: "${curName}", guard=${curName === data.scene}`);
+            if (curName === data.scene) {
+                cc.log(`[NM.sc] SKIPPED (already in "${data.scene}")`);
+                return;
+            }
+            cc.log(`[NM.sc] → loadScene("${data.scene}")`);
             cc.director.loadScene(data.scene);
         });
 
@@ -333,6 +362,41 @@ export default class NetworkManager extends cc.Component {
 
         // 本地有玩家失血 → 同步給對方（防重入避免無限迴圈）
         cc.director.on('player-life-lost', this.onPlayerLifeLostForSync, this);
+
+        // ── Level 3 雙人事件（透過 cc.director.emit 轉給 Level3Ctrl）────
+        this.room.onMessage('l3_enemy_spawn', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-enemy-spawn', data);
+        });
+        this.room.onMessage('l3_enemy_kill', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-enemy-kill', data);
+        });
+        this.room.onMessage('l3_hit_count', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-hit-count', data);
+        });
+        this.room.onMessage('l3_player_event', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-player-event', data);
+        });
+        this.room.onMessage('l3_player_fire', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-player-fire', data);
+        });
+        this.room.onMessage('l3_level_end', (data: any) => {
+            if (data.senderId === this.mySessionId) return;
+            cc.director.emit('net-l3-level-end', data);
+        });
+
+        // 連線中斷時清空 room，避免 update() 繼續 send 爆出 WebSocket CLOSED 錯誤
+        this.room.onLeave((code: number) => {
+            cc.warn(`[NM] 與伺服器斷線 (code=${code})，停止同步`);
+            this.room = null;
+        });
+        this.room.onError((code: number, message: string) => {
+            cc.warn(`[NM] 伺服器錯誤: ${code} ${message}`);
+        });
     }
 
     private onPlayerLifeLostForSync() {
@@ -342,6 +406,7 @@ export default class NetworkManager extends cc.Component {
 
     // ── 場景切換後分配本地 / 遠端玩家節點 ─────────────────────────
     assignPlayers() {
+        const sceneName = cc.director.getScene()?.name ?? '(null)';
         // Explore: Player/Player2 在 Canvas 下
         // Level2 / Level2-part2: Player/Pink_Monster 在 Scene 根節點（不在 Canvas 下）
         let node0 = cc.find('Canvas/Player') || cc.find('Player');
@@ -350,8 +415,10 @@ export default class NetworkManager extends cc.Component {
         if (!node0) node0 = cc.find('Pink_Monster');
         if (!node1) node1 = cc.find('Pink_Monster_P2');
 
+        cc.log(`[NM.ap] scene="${sceneName}" node0=${node0?.name ?? 'null'} node1=${node1?.name ?? 'null'} myIdx=${this.playerIndex}`);
+
         if (!node0) {
-            // 這是沒有玩家節點的場景（選單、過場等），跳過
+            cc.log(`[NM.ap] 跳過：場景無玩家節點`);
             return;
         }
 
@@ -359,7 +426,7 @@ export default class NetworkManager extends cc.Component {
             // 只有一個玩家節點（場景尚未放第二個）
             this.localPlayer  = node0;
             this.remotePlayer = null;
-            cc.warn('NetworkManager: 找不到第二個玩家節點，僅同步 P0');
+            cc.warn(`[NM.ap] 找不到第二個玩家節點，僅同步 P0（scene="${sceneName}"）`);
             return;
         }
 
@@ -433,6 +500,17 @@ export default class NetworkManager extends cc.Component {
             }
         }
 
+        // Level3：把 HUD 切到本地玩家的飛船
+        const currentScene = cc.director.getScene();
+        if (currentScene) {
+            const huds = currentScene.getComponentsInChildren('Level3PlayerHUD') as any[];
+            for (const hud of huds) {
+                if (hud && typeof hud.switchToPlayer === 'function') {
+                    hud.switchToPlayer(this.localPlayer);
+                }
+            }
+        }
+
         cc.log(`[NM] assignPlayers done: P${this.playerIndex}, local=${this.localPlayer?.name}, remote=${this.remotePlayer?.name}`);
         // type: 0=Static, 1=Kinematic, 2=Dynamic；期望 local=2, remote=1
         const _lRb = (this.localPlayer?.getComponentInChildren(cc.RigidBody) ?? this.localPlayer?.getComponent(cc.RigidBody)) as any;
@@ -503,6 +581,22 @@ export default class NetworkManager extends cc.Component {
                 }
             }
             cc.log(`[NM.sme] ${node.name} → ${enabled ? 'Dynamic/ON' : 'Kinematic/OFF'} ctrl.enabled=${ctrl.enabled} rbs=${rbs.length} pbcs=${pbcs.length}`);
+            return;
+        }
+
+        // Level3 SpaceshipController（無 RigidBody，直接 setPosition）
+        const l3Ctrl = node.getComponent('Level3SpaceshipController') as any;
+        if (l3Ctrl) {
+            if (enabled) {
+                l3Ctrl._isRemote = false;
+                l3Ctrl.enabled = true;
+            } else {
+                // 保持 enabled（動畫繼續跑），用 _isRemote 阻擋輸入和移動
+                l3Ctrl._isRemote = true;
+            }
+            const l3Col = node.getComponent(cc.CircleCollider);
+            if (l3Col) l3Col.enabled = enabled;
+            cc.log(`[NM.sme] Level3 ${node.name} → ${enabled ? 'local' : 'remote-ghost'}`);
             return;
         }
 
@@ -594,6 +688,7 @@ export default class NetworkManager extends cc.Component {
 
     /** 切換場景（廣播給雙方） */
     public sendSceneChange(scene: string) {
+        cc.log(`[NM.send] sendSceneChange("${scene}")`);
         if (this.room) {
             this.room.send('trigger', { scene });
         } else {
@@ -628,10 +723,11 @@ export default class NetworkManager extends cc.Component {
     }
 
     onDestroy() {
-        cc.director.off(cc.Director.EVENT_AFTER_SCENE_LAUNCH);
-        cc.director.off('player-life-lost', this.onPlayerLifeLostForSync, this);
-        if ((window as any).NM === this) {
-            (window as any).NM = null;
+        if ((window as any).NM !== this) return;
+        if (this._afterSceneLaunchHandler) {
+            cc.director.off(cc.Director.EVENT_AFTER_SCENE_LAUNCH, this._afterSceneLaunchHandler);
         }
+        cc.director.off('player-life-lost', this.onPlayerLifeLostForSync, this);
+        (window as any).NM = null;
     }
 }

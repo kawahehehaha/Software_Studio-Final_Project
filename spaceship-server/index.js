@@ -134,6 +134,38 @@ class GameRoom extends Room {
             data.senderId = client.sessionId;
             this.broadcast("checkpoint_reached", data);
         });
+
+        // ── Level 3 雙人訊息 ──────────────────────────────────────
+        // Host 生成敵人，廣播給 Client
+        this.onMessage("l3_enemy_spawn", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_enemy_spawn", data);
+        });
+        // 敵人被擊殺，廣播同步給對方
+        this.onMessage("l3_enemy_kill", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_enemy_kill", data);
+        });
+        // 本地玩家被打次數更新
+        this.onMessage("l3_hit_count", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_hit_count", data);
+        });
+        // 玩家狀態事件（done / dead / timeout）
+        this.onMessage("l3_player_event", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_player_event", data);
+        });
+        // 玩家開槍，轉發給對方以顯示 ghost 射擊動畫
+        this.onMessage("l3_player_fire", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_player_fire", data);
+        });
+        // 關卡結束，廣播最終品質分數
+        this.onMessage("l3_level_end", (client, data) => {
+            data.senderId = client.sessionId;
+            this.broadcast("l3_level_end", data);
+        });
     }
 
     onJoin(client) {
@@ -155,7 +187,12 @@ class GameRoom extends Room {
     }
 }
 
-const server = new Server({ server: http.createServer() });
+// 增大 ping 超時，防止 Level3 CPU 密集幀導致 Colyseus 誤判斷線
+const server = new Server({
+    server: http.createServer(),
+    pingInterval: 8000,   // 每 8 秒 ping 一次（預設 5s）
+    pingMaxRetries: 5     // 最多重試 5 次（≈ 40s 才斷線）
+});
 
 // 保留舊房間名稱（space_room）相容 TO_BE_CLONE，同時也支援新名稱
 server.define("space_room", GameRoom);

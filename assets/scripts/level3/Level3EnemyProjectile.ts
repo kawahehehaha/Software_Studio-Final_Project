@@ -77,12 +77,46 @@ export default class Level3EnemyProjectile extends cc.Component {
 
         if (this.tryHitPlanet(previousWorld, currentWorld)) return;
 
-        if (!this.playerNode || !this.playerNode.isValid) {
-            this.playerNode = cc.find("Player");
+        // 重新搜尋條件：節點失效，或快取的節點已變成遠端 ghost
+        const cachedCtrl = this.playerNode
+            ? (this.playerNode.getComponent('Level3SpaceshipController') as any)
+            : null;
+        if (!this.playerNode || !this.playerNode.isValid
+                || (cachedCtrl && cachedCtrl._isRemote)) {
+            this.playerNode = this.findLocalPlayer();
         }
         if (this.playerNode) {
             this.tryHitPlayer();
         }
+    }
+
+    /** 找最近的本地玩家（排除遠端 ghost），優先使用 NM.localPlayer */
+    private findLocalPlayer(): cc.Node {
+        const nm = (window as any).NM;
+        if (nm && nm.localPlayer && nm.localPlayer.isValid) {
+            return nm.localPlayer;
+        }
+
+        const scene = cc.director.getScene();
+        if (!scene) return null;
+
+        const myWorld = this.node.convertToWorldSpaceAR(cc.Vec2.ZERO);
+        let nearest: cc.Node = null;
+        let minDist = Number.POSITIVE_INFINITY;
+
+        const search = (n: cc.Node) => {
+            if (!n || !n.isValid || !n.activeInHierarchy) return;
+            const ctrl = n.getComponent('Level3SpaceshipController') as any;
+            if (ctrl && ctrl.enabled && !ctrl._isRemote) {
+                const pw = n.convertToWorldSpaceAR(cc.Vec2.ZERO);
+                const d = myWorld.sub(pw).mag();
+                if (d < minDist) { minDist = d; nearest = n; }
+            }
+            for (const child of n.children) search(child);
+        };
+        // 從 scene.children 開始（而非 scene 本身），避免 deprecated Scene.getComponent 警告
+        for (const child of scene.children) search(child);
+        return nearest;
     }
 
     private tryHitPlayer() {
@@ -104,7 +138,8 @@ export default class Level3EnemyProjectile extends cc.Component {
         const comps = this.playerNode.getComponents(cc.Component);
         for (const comp of comps) {
             const receiver = comp as any;
-            if (typeof receiver.takeDamage === "function") {
+            // 只對啟用的 controller 造成傷害（排除遠端 ghost）
+            if (typeof receiver.takeDamage === "function" && receiver.enabled !== false) {
                 receiver.takeDamage(this.damage, this.node);
                 break;
             }
@@ -122,6 +157,10 @@ export default class Level3EnemyProjectile extends cc.Component {
         }
 
         if (other.node.group !== "Player") return;
+
+        // 排除遠端 ghost（CircleCollider 已被 NM 停用，但保險起見再檢查一次）
+        const l3ctrl = other.node.getComponent('Level3SpaceshipController') as any;
+        if (l3ctrl && l3ctrl._isRemote) return;
 
         const components = other.node.getComponents(cc.Component);
         for (const component of components) {

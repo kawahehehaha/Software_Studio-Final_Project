@@ -314,8 +314,10 @@ export default class ExploreCtrl extends cc.Component {
     private tryInteract() {
         if (!this.player) return;
 
-        // Spaceship：仍用 prompt 顯示狀態判斷
+        // Spaceship：仍用 prompt 顯示狀態判斷（多人模式跳過 Inventory 避免脫鉤）
         if (this.promptInventory?.active) {
+            const nm = (window as any).NM;
+            if (nm && nm.room) return;  // 多人模式下不開 Inventory
             cc.director.loadScene("Inventory");
             return;
         }
@@ -335,6 +337,8 @@ export default class ExploreCtrl extends cc.Component {
     }
 
     private enterLevel(level: number) {
+        const nm = (window as any).NM;
+
         let scene: string;
         switch (level) {
             case 1: scene = "Level1"; break;
@@ -347,7 +351,6 @@ export default class ExploreCtrl extends cc.Component {
         }
 
         // 多人：透過 NetworkManager 廣播場景切換，確保雙方同步進入
-        const nm = (window as any).NM;
         if (nm && nm.room) {
             nm.sendSceneChange(scene);
         } else {

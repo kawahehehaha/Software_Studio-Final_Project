@@ -168,6 +168,11 @@ export default class Level3SpaceshipController extends cc.Component {
     @property
     shieldChargeRegenInterval = 5;
 
+    /** 設為 true 時：跳過輸入與移動，只播動畫（遠端 ghost 模式） */
+    public _isRemote: boolean = false;
+    private _lastRemoteX: number = 0;
+    private _lastRemoteY: number = 0;
+
     private keys = new Set<number>();
     private velocity = cc.v2();
     private planetGravityVelocity = cc.v2();
@@ -265,6 +270,18 @@ export default class Level3SpaceshipController extends cc.Component {
     }
 
     update(dt: number) {
+        if (this._isRemote) {
+            // 遠端 ghost：根據 NM 移動的位置差判斷引擎動畫
+            const dx = this.node.x - this._lastRemoteX;
+            const dy = this.node.y - this._lastRemoteY;
+            this._lastRemoteX = this.node.x;
+            this._lastRemoteY = this.node.y;
+            this.setEngineAnimation(dx * dx + dy * dy > 1);
+            this.updateEngineAnimation(dt);
+            this.updateWeaponAnimation(dt);
+            return;
+        }
+
         const direction = this.getMoveDirection();
         this.updateVelocity(direction, dt);
         this.updatePosition(dt);
@@ -283,6 +300,7 @@ export default class Level3SpaceshipController extends cc.Component {
     }
 
     private onKeyDown(event: cc.Event.EventKeyboard) {
+        if (!this.enabled || this._isRemote) return;
         const isNewPress = !this.keys.has(event.keyCode);
         this.keys.add(event.keyCode);
 
@@ -298,6 +316,7 @@ export default class Level3SpaceshipController extends cc.Component {
     }
 
     private onKeyUp(event: cc.Event.EventKeyboard) {
+        if (!this.enabled || this._isRemote) return;
         this.keys.delete(event.keyCode);
     }
 
@@ -405,6 +424,8 @@ export default class Level3SpaceshipController extends cc.Component {
         this.timeSinceDamage = 0;
         this.health = Math.max(0, this.health - amount);
 
+        // 通知 Level3Ctrl 計算被打次數（多人扣星用）
+        cc.director.emit("level3-player-hit", this.node);
         cc.director.emit(
             "level3-player-resources-changed",
             this.getResourceState(),
@@ -744,12 +765,13 @@ export default class Level3SpaceshipController extends cc.Component {
         this.weaponFrameElapsed = 0;
         this.weaponSprite.spriteFrame = this.weaponFrames[this.weaponFrame];
 
-        // Bullet spawning can listen for this event later.
-        cc.director.emit(
-            "level3-player-fire",
-            this.pendingFireDirection,
-            this.node
-        );
+        cc.director.emit("level3-player-fire", this.pendingFireDirection, this.node);
+
+        // 廣播給對方，讓對方也看到子彈
+        const nm = (window as any).NM;
+        if (nm && nm.room) {
+            nm.room.send('l3_player_fire', { direction: this.pendingFireDirection });
+        }
 
         if (this.weaponFrames.length === 1) {
             this.resetWeaponAnimation();

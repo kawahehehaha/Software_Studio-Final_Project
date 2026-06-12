@@ -55,6 +55,11 @@ export default class Level3EnemyShip extends cc.Component {
     @property(cc.Node)
     firePoint: cc.Node = null;
 
+    /** 多人同步用：Host 生成時指派，用來識別同一隻敵人 */
+    public spawnId: number = -1;
+    /** 為 true 時跳過 kill 廣播（避免無限迴圈） */
+    public _fromNetwork: boolean = false;
+
     private player: cc.Node = null;
     private health = 1;
     private fireTimer = 0;
@@ -71,7 +76,7 @@ export default class Level3EnemyShip extends cc.Component {
     }
 
     start() {
-        this.player = this.findPlayer();
+        this.player = this.findNearestPlayer();
         this.fireTimer = Math.random() * Math.max(0.1, this.fireInterval);
     }
 
@@ -82,10 +87,21 @@ export default class Level3EnemyShip extends cc.Component {
             this.playerSearchTimer -= dt;
             if (this.playerSearchTimer <= 0) {
                 this.playerSearchTimer = 0.5;
-                this.player = this.findPlayer();
+                this.player = this.findNearestPlayer();
             }
             this.lastPlayerPosition = null;
             return;
+        }
+
+        // 玩家控制器停用（死亡）或為遠端 ghost → 立即放棄並重新搜尋
+        {
+            const pc = this.player.getComponent('Level3SpaceshipController') as any;
+            if (pc && (!pc.enabled || pc._isRemote)) {
+                this.player = null;
+                this.playerSearchTimer = 0;
+                this.lastPlayerPosition = null;
+                return;
+            }
         }
 
         const playerWorld = this.player.convertToWorldSpaceAR(cc.Vec2.ZERO);
@@ -411,25 +427,47 @@ export default class Level3EnemyShip extends cc.Component {
         }
     }
 
-    private findPlayer(): cc.Node {
+    /** 找距離最近且 controller 啟用的玩家（本地玩家），忽略遠端 ghost */
+    private findNearestPlayer(): cc.Node {
+        // 優先用 NM.localPlayer，避免遍歷整棵場景樹（與 deprecated Scene.getComponent 警告）
+        const nm = (window as any).NM;
+        if (nm && nm.localPlayer && nm.localPlayer.isValid) {
+            const ctrl = nm.localPlayer.getComponent('Level3SpaceshipController') as any;
+            if (ctrl && ctrl.enabled && !ctrl._isRemote) return nm.localPlayer;
+        }
+
         const scene = cc.director.getScene();
-        return this.findPlayerInChildren(scene);
+        if (!scene) return null;
+
+        const players: cc.Node[] = [];
+        // 從 scene.children 開始（而非 scene 本身），避免 deprecated Scene.getComponent 警告
+        for (const child of scene.children) {
+            this.gatherLocalPlayers(child, players);
+        }
+        if (players.length === 0) return null;
+        if (players.length === 1) return players[0];
+
+        const myWorld = this.node.convertToWorldSpaceAR(cc.Vec2.ZERO);
+        let nearest: cc.Node = null;
+        let minDist = Number.POSITIVE_INFINITY;
+        for (const p of players) {
+            if (!p.isValid || !p.activeInHierarchy) continue;
+            const pw = p.convertToWorldSpaceAR(cc.Vec2.ZERO);
+            const d = myWorld.sub(pw).mag();
+            if (d < minDist) { minDist = d; nearest = p; }
+        }
+        return nearest;
     }
 
-    private findPlayerInChildren(node: cc.Node): cc.Node {
-        if (!node) return null;
-        if (
-            node.group === "Player"
-            || node.name === "Player"
-            || !!node.getComponent("Level3SpaceshipController")
-        ) {
-            return node;
+    private gatherLocalPlayers(node: cc.Node, out: cc.Node[]) {
+        if (!node) return;
+        const ctrl = node.getComponent('Level3SpaceshipController') as any;
+        if (ctrl && ctrl.enabled && !ctrl._isRemote) {
+            out.push(node);
+            return;
         }
-
         for (const child of node.children) {
-            const player = this.findPlayerInChildren(child);
-            if (player) return player;
+            this.gatherLocalPlayers(child, out);
         }
-        return null;
     }
 }

@@ -210,6 +210,12 @@ export default class Level3PlayerHUD extends cc.Component {
         return this.totalScore;
     }
 
+    /** 觀戰模式：切換 HUD 追蹤的目標玩家（顯示對方的血量條） */
+    public switchToPlayer(newPlayer: cc.Node) {
+        if (!newPlayer || !newPlayer.isValid) return;
+        this.player = newPlayer;
+    }
+
     private onEnemyKilled(enemyTypeIndex: number) {
         const index = Math.floor(Number(enemyTypeIndex));
         if (index < 0 || index >= this.killCounts.length) return;

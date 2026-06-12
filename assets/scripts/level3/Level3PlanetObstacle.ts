@@ -47,7 +47,11 @@ export default class Level3PlanetObstacle extends cc.Component {
 
     update(dt: number) {
         if (!this.player || !this.player.isValid) {
-            this.player = cc.find("Player");
+            // 優先用 NM.localPlayer（多人模式正確對應本地玩家節點）
+            const nm = (window as any).NM;
+            this.player = (nm && nm.localPlayer && nm.localPlayer.isValid)
+                ? nm.localPlayer
+                : cc.find("Player");
         }
         if (!this.player) return;
 

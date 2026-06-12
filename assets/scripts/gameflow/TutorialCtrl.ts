@@ -18,6 +18,9 @@ export default class TutorialCtrl extends cc.Component {
     private onAnyTouch() {
         // 只觸發一次，立刻移除監聽
         this.node.off(cc.Node.EventType.TOUCH_START, this.onAnyTouch, this);
+        // 防護：只有在 Tutorial 場景才跳轉，避免此元件被錯放到其他場景時誤觸
+        const scene = cc.director.getScene();
+        if (!scene || scene.name !== 'Tutorial') return;
         cc.director.loadScene("Explore");
     }
 

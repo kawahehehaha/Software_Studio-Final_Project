@@ -28,6 +28,7 @@ export default class Tutorial3Ctrl extends cc.Component {
     private switched: boolean = false;
 
     start() {
+        cc.log('[Tutorial3] start()');
         if (!this.textNode || !this.hintNode || !this.tutorialNode) {
             cc.warn("Tutorial3Ctrl: 請在 Inspector 將 text / hint / tutorial 節點拖入");
             return;
@@ -39,7 +40,11 @@ export default class Tutorial3Ctrl extends cc.Component {
 
         this.fadeInLabels(this.textNode);
 
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+        // 延遲 0.3s 後才開始接受觸控，避免前一場景殘留的 TOUCH_END 立即觸發
+        this.scheduleOnce(() => {
+            cc.log('[Tutorial3] 開始接受 TOUCH_END');
+            this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+        }, 0.3);
     }
 
     onDestroy() {
@@ -47,6 +52,7 @@ export default class Tutorial3Ctrl extends cc.Component {
     }
 
     private onTouchEnd() {
+        cc.log(`[Tutorial3] onTouchEnd: switched=${this.switched}`);
         if (!this.switched) {
             this.collectLabels(this.textNode).forEach(label => {
                 label.stopAllActions();
@@ -59,7 +65,13 @@ export default class Tutorial3Ctrl extends cc.Component {
             this.switched = true;
 
         } else {
-            cc.director.loadScene("Level3");
+            const nm = (window as any).NM;
+            cc.log(`[Tutorial3] → Level3, nm=${!!nm}, room=${!!nm?.room}`);
+            if (nm && nm.room) {
+                nm.sendSceneChange('Level3');
+            } else {
+                cc.director.loadScene('Level3');
+            }
         }
     }
 
