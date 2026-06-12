@@ -110,6 +110,7 @@ export default class Level3PlayerHUD extends cc.Component {
     private killFallbackLabels: cc.Label[] = [];
     private killCounts = [0, 0, 0, 0];
     private totalScore = 0;
+    private isSpectating = false;
 
     onLoad() {
         if (!this.player) {
@@ -214,6 +215,11 @@ export default class Level3PlayerHUD extends cc.Component {
     public switchToPlayer(newPlayer: cc.Node) {
         if (!newPlayer || !newPlayer.isValid) return;
         this.player = newPlayer;
+        this.isSpectating = true;
+        this.setFill("health",  0, 1);
+        this.setFill("stamina", 0, 1);
+        this.setFill("ammo",    0, 1);
+        this.setFill("shield",  0, 1);
     }
 
     private onEnemyKilled(enemyTypeIndex: number) {
@@ -404,6 +410,7 @@ export default class Level3PlayerHUD extends cc.Component {
     }
 
     private refresh() {
+        if (this.isSpectating) return;
         if (!this.player || !this.player.isValid) return;
 
         const components = this.player.getComponents(cc.Component);

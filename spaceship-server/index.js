@@ -27,6 +27,9 @@ const http = require("http");
 
 class GameRoom extends Room {
     onCreate() {
+        // Single seed shared with all clients so procedural maps are identical
+        this.mapSeed = Math.floor(Math.random() * 0xFFFFFFFF);
+
         this.setState({
             players:   {},
             itemCount: 0,
@@ -171,8 +174,8 @@ class GameRoom extends Room {
     onJoin(client) {
         const playerIndex = Object.keys(this.state.players).length;
         this.state.players[client.sessionId] = { x: 0, y: 0, angle: 0 };
-        client.send("init", { playerIndex });
-        console.log(`[+] ${client.sessionId} 加入 → 玩家${playerIndex}`);
+        client.send("init", { playerIndex, mapSeed: this.mapSeed });
+        console.log(`[+] ${client.sessionId} 加入 → 玩家${playerIndex} seed=${this.mapSeed}`);
 
         // 超過 2 人時踢掉（選填）
         if (playerIndex >= 2) {

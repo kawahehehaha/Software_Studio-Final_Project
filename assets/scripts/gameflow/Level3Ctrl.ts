@@ -102,16 +102,6 @@ export default class Level3Ctrl extends cc.Component {
         cc.director.on('net-l3-level-end',   this.onNetLevelEnd,   this);
     }
 
-    onDestroy() {
-        cc.director.off('level3-player-hit', this.onLocalPlayerHit, this);
-        cc.director.off('net-l3-enemy-spawn', this.onNetEnemySpawn, this);
-        cc.director.off('net-l3-enemy-kill',  this.onNetEnemyKill,  this);
-        cc.director.off('net-l3-hit-count',   this.onNetHitCount,   this);
-        cc.director.off('net-l3-player-event',this.onNetPlayerEvent, this);
-        cc.director.off('net-l3-level-end',   this.onNetLevelEnd,   this);
-        if (this.hudRoot && this.hudRoot.isValid) this.hudRoot.destroy();
-    }
-
     // ── Update ────────────────────────────────────────────────
     update(dt: number) {
         if (this.isGameOver) return;
@@ -181,7 +171,8 @@ export default class Level3Ctrl extends cc.Component {
         this.spawnTimer += dt;
         if (this.spawnTimer >= this.spawnInterval) {
             this.spawnTimer = 0;
-            if (doSpawn) this.spawnEnemies();
+            // In multiplayer, only the host spawns enemies so both sides see identical enemies
+            if (doSpawn && (this.isSoloMode() || this.isHost)) this.spawnEnemies();
         }
     }
 
@@ -195,18 +186,31 @@ export default class Level3Ctrl extends cc.Component {
 
         if (liveCount >= this.maxEnemies) return;
 
-        const refY = this.localPlayerNode ? this.localPlayerNode.y : this.player.y;
+        const localY = this.localPlayerNode ? this.localPlayerNode.y : this.player.y;
+
+        // In multiplayer: spawn at both midpoint (C) and leader (A) so both players see enemies
+        let remoteY = localY;
+        if (!this.isSoloMode()) {
+            const nm = (window as any).NM;
+            if (nm && nm.remotePlayer && nm.remotePlayer.isValid) {
+                remoteY = nm.remotePlayer.y;
+            }
+        }
+        const midY  = (localY + remoteY) * 0.5;
+        const leadY = Math.max(localY, remoteY);
 
         if (liveCount === 0) {
-            const want  = this.randomInt(3, 5);
+            const want  = this.randomInt(6, 9);
             const count = Math.min(want, this.maxEnemies - liveCount);
             for (let i = 0; i < count; i++) {
+                const refY = i % 2 === 0 ? midY : leadY;
                 this.spawnOneEnemy(refY + 600, refY + 1200);
             }
         } else {
-            const want  = this.randomInt(1, 3);
+            const want  = this.randomInt(3, 5);
             const count = Math.min(want, this.maxEnemies - liveCount);
             for (let i = 0; i < count; i++) {
+                const refY = i % 2 === 0 ? midY : leadY;
                 this.spawnOneEnemy(refY + 600, refY + 1200);
             }
         }
@@ -232,6 +236,14 @@ export default class Level3Ctrl extends cc.Component {
         const id = this.spawnIdCounter++;
         const ship = node.getComponent('Level3EnemyShip') as any;
         if (ship) ship.spawnId = id;
+
+        // Broadcast to client so both machines have identical enemies
+        if (!this.isSoloMode()) {
+            const nm = (window as any).NM;
+            if (nm && nm.room) {
+                nm.room.send('l3_enemy_spawn', { prefabIndex, x: spawnX, y: spawnY, spawnId: id });
+            }
+        }
     }
 
     /** Client 收到 Host 的敵人生成通知 */
@@ -431,12 +443,23 @@ export default class Level3Ctrl extends cc.Component {
     }
 
     // ── 網路事件接收 ──────────────────────────────────────────
-    private onNetEnemySpawn(_data: any) {
-        // 雙方各自獨立生成敵人，不複製對方的敵人以避免雙倍敵人問題
+    private onNetEnemySpawn(data: any) {
+        // Client receives host's spawn and creates the identical enemy
+        this.spawnOneEnemyFromNetwork(data.prefabIndex, data.x, data.y, data.spawnId);
     }
 
-    private onNetEnemyKill(_data: any) {
-        // 對應 onNetEnemySpawn：敵人各自獨立，不需跨機器同步擊殺
+    private onNetEnemyKill(data: any) {
+        // Find the enemy with matching spawnId and kill it locally
+        this.refreshEnemyList();
+        for (const enemy of this.cachedEnemies) {
+            if (!enemy || !enemy.isValid) continue;
+            const ship = enemy.getComponent('Level3EnemyShip') as any;
+            if (ship && ship.spawnId === data.spawnId) {
+                ship._fromNetwork = true;
+                ship.takeDamage(9999);
+                break;
+            }
+        }
     }
 
     private onNetHitCount(data: any) {
@@ -621,12 +644,13 @@ export default class Level3Ctrl extends cc.Component {
     }
 
     onDestroy() {
-        cc.director.off('level3-player-hit', this.onLocalPlayerHit, this);
-        cc.director.off('net-l3-enemy-spawn', this.onNetEnemySpawn, this);
-        cc.director.off('net-l3-enemy-kill',  this.onNetEnemyKill,  this);
-        cc.director.off('net-l3-hit-count',   this.onNetHitCount,   this);
-        cc.director.off('net-l3-player-event',this.onNetPlayerEvent, this);
-        cc.director.off('net-l3-level-end',   this.onNetLevelEnd,   this);
+        cc.director.off('level3-player-hit',   this.onLocalPlayerHit, this);
+        cc.director.off('net-l3-enemy-spawn',  this.onNetEnemySpawn,  this);
+        cc.director.off('net-l3-enemy-kill',   this.onNetEnemyKill,   this);
+        cc.director.off('net-l3-hit-count',    this.onNetHitCount,    this);
+        cc.director.off('net-l3-player-event', this.onNetPlayerEvent, this);
+        cc.director.off('net-l3-level-end',    this.onNetLevelEnd,    this);
         if (this.hudRoot && this.hudRoot.isValid) this.hudRoot.destroy();
     }
+
 }

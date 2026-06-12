@@ -93,14 +93,33 @@ export default class Level3EnemyShip extends cc.Component {
             return;
         }
 
-        // 玩家控制器停用（死亡）或為遠端 ghost → 立即放棄並重新搜尋
+        // 玩家控制器停用（死亡）→ 放棄目標
+        // 遠端 ghost (_isRemote) → 正常局不追；觀戰局（本地玩家已死）才追
         {
             const pc = this.player.getComponent('Level3SpaceshipController') as any;
-            if (pc && (!pc.enabled || pc._isRemote)) {
-                this.player = null;
-                this.playerSearchTimer = 0;
-                this.lastPlayerPosition = null;
-                return;
+            if (pc) {
+                if (!pc.enabled) {
+                    // 控制器停用 = 該玩家已死，一定放棄
+                    this.player = null;
+                    this.playerSearchTimer = 0;
+                    this.lastPlayerPosition = null;
+                    return;
+                }
+                if (pc._isRemote) {
+                    // 只有本地玩家還活著時才忽略 ghost
+                    const nm = (window as any).NM;
+                    const localCtrl = nm?.localPlayer?.isValid
+                        ? nm.localPlayer.getComponent('Level3SpaceshipController') as any
+                        : null;
+                    if (!localCtrl || localCtrl.enabled) {
+                        // 本地玩家活著 → 不追 ghost
+                        this.player = null;
+                        this.playerSearchTimer = 0;
+                        this.lastPlayerPosition = null;
+                        return;
+                    }
+                    // 本地玩家已死（觀戰）→ 繼續追 remote ghost
+                }
             }
         }
 
@@ -179,6 +198,15 @@ export default class Level3EnemyShip extends cc.Component {
             && this.node.isValid
         ) {
             this.deathReported = true;
+
+            // Notify peer so they remove the same enemy on their machine
+            if (!this._fromNetwork && this.spawnId >= 0) {
+                const nm = (window as any).NM;
+                if (nm && nm.room) {
+                    nm.room.send('l3_enemy_kill', { spawnId: this.spawnId });
+                }
+            }
+
             cc.systemEvent.emit(
                 "level3-enemy-killed",
                 this.resolveEnemyTypeIndex()
@@ -427,20 +455,29 @@ export default class Level3EnemyShip extends cc.Component {
         }
     }
 
-    /** 找距離最近且 controller 啟用的玩家（本地玩家），忽略遠端 ghost */
+    /** 找距離最近且 controller 啟用的玩家（本地玩家），忽略遠端 ghost。
+     *  例外：本地玩家已死（觀戰）時，改回傳 remote ghost 以維持觀戰時的敵人行為。 */
     private findNearestPlayer(): cc.Node {
-        // 優先用 NM.localPlayer，避免遍歷整棵場景樹（與 deprecated Scene.getComponent 警告）
         const nm = (window as any).NM;
         if (nm && nm.localPlayer && nm.localPlayer.isValid) {
-            const ctrl = nm.localPlayer.getComponent('Level3SpaceshipController') as any;
-            if (ctrl && ctrl.enabled && !ctrl._isRemote) return nm.localPlayer;
+            const localCtrl = nm.localPlayer.getComponent('Level3SpaceshipController') as any;
+            if (localCtrl) {
+                if (localCtrl.enabled && !localCtrl._isRemote) return nm.localPlayer;
+
+                // 本地玩家已死（觀戰模式）→ 以 remote ghost 為目標
+                if (!localCtrl.enabled && nm.remotePlayer && nm.remotePlayer.isValid) {
+                    const remoteCtrl = nm.remotePlayer.getComponent('Level3SpaceshipController') as any;
+                    if (remoteCtrl && remoteCtrl.enabled) return nm.remotePlayer;
+                }
+                return null;
+            }
         }
 
+        // 單人或無 NM：從場景樹找啟用的玩家
         const scene = cc.director.getScene();
         if (!scene) return null;
 
         const players: cc.Node[] = [];
-        // 從 scene.children 開始（而非 scene 本身），避免 deprecated Scene.getComponent 警告
         for (const child of scene.children) {
             this.gatherLocalPlayers(child, players);
         }

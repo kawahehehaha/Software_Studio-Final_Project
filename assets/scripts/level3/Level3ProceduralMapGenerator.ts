@@ -84,8 +84,14 @@ export default class Level3ProceduralMapGenerator extends cc.Component {
     private spawnedPlanets: SpawnedCircle[] = [];
     private planetPools: cc.NodePool[] = [];
     private playerSpawnPosition = cc.v2();
+    private rng: () => number = Math.random;
 
     onLoad() {
+        // Use a shared seed in multiplayer so both machines generate identical terrain
+        const nm = (window as any).NM;
+        if (nm && nm.mapSeed) {
+            this.rng = this.makeSeededRng(nm.mapSeed);
+        }
         cc.director.getCollisionManager().enabled = true;
 
         if (!this.obstacleLayer) {
@@ -237,7 +243,7 @@ export default class Level3ProceduralMapGenerator extends cc.Component {
             }
 
             planet.setPosition(x, y - chunkBottom);
-            planet.scaleX = Math.random() < 0.5 ? -scale : scale;
+            planet.scaleX = this.rng() < 0.5 ? -scale : scale;
             planet.scaleY = scale;
             planet.group = "Ground";
             chunk.addChild(planet);
@@ -417,10 +423,21 @@ export default class Level3ProceduralMapGenerator extends cc.Component {
     }
 
     private randomRange(min: number, max: number): number {
-        return min + Math.random() * (max - min);
+        return min + this.rng() * (max - min);
     }
 
     private randomInt(min: number, max: number): number {
         return Math.floor(this.randomRange(min, max + 1));
+    }
+
+    /** Mulberry32 — fast, good-quality 32-bit seeded PRNG */
+    private makeSeededRng(seed: number): () => number {
+        let s = seed >>> 0;
+        return () => {
+            s = (s + 0x6D2B79F5) >>> 0;
+            let t = Math.imul(s ^ (s >>> 15), 1 | s);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 0x100000000;
+        };
     }
 }

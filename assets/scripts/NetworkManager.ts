@@ -55,6 +55,9 @@ export default class NetworkManager extends cc.Component {
     // ── AFTER_SCENE_LAUNCH lambda reference（不掛 this target 才能跨 WebSocket callback 正常觸發）──
     private _afterSceneLaunchHandler: () => void = null;
 
+    /** Shared map seed sent by server so both clients generate identical terrain */
+    public mapSeed: number = 0;
+
     // ── 單例存取 ─────────────────────────────────────────────────
     static get instance(): NetworkManager | null {
         return (window as any).NM ?? null;
@@ -117,10 +120,11 @@ export default class NetworkManager extends cc.Component {
         // 伺服器告知玩家編號（0 = 先加入，1 = 後加入）
         this.room.onMessage('init', (data: any) => {
             this.playerIndex   = data.playerIndex;
+            this.mapSeed       = data.mapSeed ?? 0;
             GameData.playerId  = data.playerIndex;
             GameData.isSolo    = false;           // 切換為多人模式
             this.scheduleOnce(() => this.assignPlayers(), 0.25);
-            cc.log('NetworkManager: 我是玩家 ' + data.playerIndex);
+            cc.log('NetworkManager: 我是玩家 ' + data.playerIndex + ' seed=' + this.mapSeed);
         });
 
         // 接收對方玩家位置
